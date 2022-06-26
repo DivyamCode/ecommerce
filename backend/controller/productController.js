@@ -1,11 +1,11 @@
 const Product = require("../model/productModel");
-const ErrorHandler = require("../utils/errorhandler");
-const catchAsyncEror = require("../utils/catchAsyncEror");
+// const ErrorHandler = require("../utils/errorhandler");
+// const catchAsyncEror = require("../utils/catchAsyncEror");
 const ApiFeature = require("../utils/apifeatures");
 
 //create product
 
-exports.createProduct= catchAsyncEror( async(req,res,next)=>{
+exports.createProduct=  async(req,res,next)=>{
     const product = await Product.create(req.body);
 
     res.status(201).json({
@@ -36,10 +36,10 @@ exports.createProduct= catchAsyncEror( async(req,res,next)=>{
     //     created_at :Date(),
     // })
     // const Registered =  Registeruser.save();
-})
+}
 
 /// Getting all products
-exports.getAllProducts =catchAsyncEror(
+exports.getAllProducts =
     async(req,res)=>{
 
        const apifeatures = new ApiFeature(Product.find(),req.query.keyword).search();
@@ -56,11 +56,10 @@ exports.getAllProducts =catchAsyncEror(
     
     }
 
-) 
 
 //Update product --admin
 
-exports.updateProduct =catchAsyncEror(
+exports.updateProduct =
     async (req,res,next)=>{
         let product = Product.findById(req.params.id);
     
@@ -80,11 +79,11 @@ exports.updateProduct =catchAsyncEror(
             product
         })
     }
-) 
+
 
     
 
-exports.deleteProduct =catchAsyncEror(
+exports.deleteProduct =
     async (req,res,next)=>{
         const product = await Product.findById(req.params.id);
     
@@ -100,9 +99,9 @@ exports.deleteProduct =catchAsyncEror(
             message:"Product is removed"
         })
     }
-) ;
+ ;
 
-exports.getProductdetail =catchAsyncEror(
+exports.getProductdetail =
     async(req,res,next)=>{
         const product = await Product.findById(req.params.id);
     
@@ -116,7 +115,6 @@ exports.getProductdetail =catchAsyncEror(
             product
         })       
     }
-) 
 
   
 

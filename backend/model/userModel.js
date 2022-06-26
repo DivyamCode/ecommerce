@@ -45,44 +45,6 @@ const userSchema = new mongoose.Schema({
 });
 
 
-userSchema.pre("save",async function(next){
-     
-    if(!this.isModified("password")){
-        next();
-    }
-    this.password = await bcrypt.hash(this.password,10);
-});
-
-//JWT TOKEN
-userSchema.methods.getJWTToken = function(){
-    return jwt.sign({id:this.id},process.env.JWT_SECRET,{
-        expiresIn:process.env.JWT_EXPIRE
-    })
-}
-
-//creating methods function ap[plicable on middleware databse model]
-
-userSchema.methods.comparePassword = async function (password) {
-    return await bcrypt.compare(password, this.password);
-  };
-  
-
-
-userSchema.methods.getResetPasswordToken =function(){
-        //Generating Token
-        const resetToken = crypto.randomBytes(20).toString("hex");
-
-        //hashing and add to user Schema
-        this.resetPasswordToken = crypto.createHash("sha256").
-        update(resetToken)
-        .digest("hex");
-
-        this.resetPasswordExpire = Date.now() + 15*60*1000;
-
-        return resetToken;
-
-}
-
 
 module.exports = mongoose.model("user",userSchema);
 

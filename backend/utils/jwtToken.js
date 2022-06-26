@@ -1,7 +1,10 @@
 //cookie and token
 
 const sendToken = (user,statusCode,res)=>{
-    const token = user.getJWTToken();
+    const jwt = require('jsonwebtoken');
+    const token = jwt.sign({id:user.id},process.env.JWT_SECRET,{
+        expiresIn:process.env.JWT_EXPIRE
+    });
 
     const options = {
         Date: new Date(
